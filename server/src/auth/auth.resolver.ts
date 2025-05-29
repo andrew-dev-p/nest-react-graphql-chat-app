@@ -10,7 +10,7 @@ export class AuthResolver {
 
   @Mutation(() => RegisterResponse)
   async register(
-    @Args() registerDto: RegisterDto,
+    @Args('registerDto') registerDto: RegisterDto,
     @Context()
     context: {
       res: Response;
@@ -21,7 +21,7 @@ export class AuthResolver {
 
   @Mutation(() => LoginResponse)
   async login(
-    @Args() loginDto: LoginDto,
+    @Args('loginDto') loginDto: LoginDto,
     @Context()
     context: {
       res: Response;
@@ -35,7 +35,7 @@ export class AuthResolver {
     return this.authService.logout(context.res);
   }
 
-  @Mutation()
+  @Mutation(() => String)
   async refreshToken(@Context() context: { req: Request; res: Response }) {
     return this.authService.refreshToken(context.req, context.res);
   }
