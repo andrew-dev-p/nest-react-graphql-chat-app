@@ -1,15 +1,15 @@
 import Sidebar from "../components/Sidebar";
 import MainLayout from "../layouts/MainLayout";
-import { Flex } from "@mantine/core";
 import AuthOverlay from "../components/AuthOverlay";
+import ProfileSettings from "../components/ProfileSettings";
 
 const Home = () => {
   return (
     <MainLayout>
       <>
         <AuthOverlay />
+        <ProfileSettings />
         <Sidebar />
-        <Flex>Home</Flex>
       </>
     </MainLayout>
   );

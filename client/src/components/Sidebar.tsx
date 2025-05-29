@@ -17,6 +17,7 @@ import {
   IconBrandMessenger,
   IconBrandWechat,
   IconLogin,
+  type IconProps,
 } from "@tabler/icons-react";
 import { useMutation } from "@apollo/client";
 import { LOGOUT_USER } from "../graphql/mutations/Logout";
@@ -56,7 +57,7 @@ const useStyles = createStyles((theme) => {
 });
 
 interface NavbarLinkProps {
-  icon: React.FC<any>;
+  icon: React.FC<IconProps>;
   label: string;
   active?: boolean;
   onClick?(): void;
@@ -134,7 +135,7 @@ function Sidebar() {
           {userId && (
             <NavbarLink
               icon={IconUser}
-              label={"Profile(" + user.fullname + ")"}
+              label={`Profile: ${user.fullname}`}
               onClick={toggleProfileSettingsModal}
             />
           )}
