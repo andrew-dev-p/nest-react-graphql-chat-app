@@ -3,31 +3,34 @@ import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dtos';
 import { RegisterResponse, LoginResponse } from './auth.entity';
 import { Response, Request } from 'express';
+import { UseFilters } from '@nestjs/common';
+import { GraphQLErrorFilter } from '../filters/custom-exception-filter';
 
+@UseFilters(GraphQLErrorFilter)
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => RegisterResponse)
   async register(
-    @Args('registerDto') registerDto: RegisterDto,
+    @Args('registerInput') registerInput: RegisterDto,
     @Context()
     context: {
       res: Response;
     },
   ) {
-    return this.authService.register(registerDto, context.res);
+    return this.authService.register(registerInput, context.res);
   }
 
   @Mutation(() => LoginResponse)
   async login(
-    @Args('loginDto') loginDto: LoginDto,
+    @Args('loginInput') loginInput: LoginDto,
     @Context()
     context: {
       res: Response;
     },
   ) {
-    return this.authService.login(loginDto, context.res);
+    return this.authService.login(loginInput, context.res);
   }
 
   @Mutation(() => Boolean)
