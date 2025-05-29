@@ -165,8 +165,6 @@ export class AuthService {
     res.clearCookie('access_token');
     res.clearCookie('refresh_token');
 
-    return {
-      message: 'Logged out successfully',
-    };
+    return 'Logged out successfully';
   }
 }
