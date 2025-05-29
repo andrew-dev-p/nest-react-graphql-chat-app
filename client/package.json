@@ -20,6 +20,7 @@
     "graphql": "^16.11.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.1",
     "subscriptions-transport-ws": "^0.11.0",
     "zustand": "^5.0.5"
   },
