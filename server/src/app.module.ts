@@ -9,6 +9,7 @@ import { join } from 'path';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TokenService } from './token/token.service';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 const pubSub = new RedisPubSub({
   connection: {
@@ -24,6 +25,10 @@ const pubSub = new RedisPubSub({
   imports: [
     AuthModule,
     UserModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      serveRoot: '/',
+    }),
     GraphQLModule.forRootAsync({
       imports: [ConfigModule, AppModule],
       inject: [ConfigService],

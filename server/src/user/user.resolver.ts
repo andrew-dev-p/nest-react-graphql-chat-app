@@ -33,7 +33,7 @@ export class UserResolver {
 
     const uniqueFilename = `${uuidv4()}_${filename}`;
     const imagePath = join(process.cwd(), 'public', 'images', uniqueFilename);
-    const imageUrl = `${process.env.APP_URL}/images/${uniqueFilename}`;
+    const imageUrl = `${process.env.API_URL}/images/${uniqueFilename}`;
 
     const readStream = createReadStream();
     readStream.pipe(createWriteStream(imagePath));

@@ -2,9 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import * as fs from 'fs';
 import { join } from 'path';
+import { resolve } from 'path';
+
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) {}
+  private readonly uploadsPath: string;
+
+  constructor(private readonly prisma: PrismaService) {
+    this.uploadsPath = resolve(process.cwd(), 'public', 'images');
+    if (!fs.existsSync(this.uploadsPath)) {
+      fs.mkdirSync(this.uploadsPath, { recursive: true });
+    }
+  }
 
   async updateProfile(userId: number, fullname: string, avatarUrl: string) {
     if (avatarUrl) {
@@ -22,14 +31,7 @@ export class UserService {
 
       if (oldUser?.avatarUrl) {
         const imageName = oldUser.avatarUrl.split('/').pop();
-        const imagePath = join(
-          __dirname,
-          '..',
-          '..',
-          'public',
-          'images',
-          imageName || '',
-        );
+        const imagePath = join(this.uploadsPath, imageName || '');
         if (fs.existsSync(imagePath)) {
           fs.unlinkSync(imagePath);
         }
