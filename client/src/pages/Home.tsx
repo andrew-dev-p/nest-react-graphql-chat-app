@@ -6,6 +6,7 @@ import RoomList from "../components/RoomList";
 import ProtectedRoutes from "../components/ProtectedRoutes";
 import { Flex } from "@mantine/core";
 import AddChatroom from "../components/AddChatroom";
+import JoinRoomOrChatWindow from "../components/JoinRoomOrChatWindow";
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
             w="100vw"
           >
             <RoomList />
+            <JoinRoomOrChatWindow />
           </Flex>
         </ProtectedRoutes>
       </>

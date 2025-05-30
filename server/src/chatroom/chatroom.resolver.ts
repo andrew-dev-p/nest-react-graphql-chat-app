@@ -35,6 +35,7 @@ export class ChatroomResolver {
   newMessage(@Args('chatroomId') chatroomId: number) {
     return this.pubSub.asyncIterableIterator(`newMessage.${chatroomId}`);
   }
+
   @Subscription(() => User, {
     nullable: true,
     resolve: (value) => value.user,
@@ -72,12 +73,15 @@ export class ChatroomResolver {
     @Context() context: { req: Request },
   ) {
     const user = await this.userService.getUser(context.req.user.sub);
+
     await this.pubSub.publish(`userStartedTyping.${chatroomId}`, {
       user,
       typingUserId: user?.id,
     });
+
     return user;
   }
+
   @UseFilters(GraphQLErrorFilter)
   @UseGuards(GraphqlAuthGuard)
   @Mutation(() => User, {})
@@ -106,6 +110,7 @@ export class ChatroomResolver {
   ) {
     let imagePath: string = '';
     if (image) imagePath = await this.chatroomService.saveImage(image);
+
     const newMessage = await this.chatroomService.sendMessage(
       chatroomId,
       content,
@@ -151,9 +156,11 @@ export class ChatroomResolver {
   async getMessagesForChatroom(@Args('chatroomId') chatroomId: number) {
     return this.chatroomService.getMessagesForChatroom(chatroomId);
   }
+
   @Mutation(() => String)
   async deleteChatroom(@Args('chatroomId') chatroomId: number) {
     await this.chatroomService.deleteChatroom(chatroomId);
+
     return 'Chatroom deleted successfully';
   }
 }
